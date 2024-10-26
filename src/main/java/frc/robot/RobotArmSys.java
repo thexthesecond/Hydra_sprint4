@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +16,8 @@ public class RobotArmSys extends SubsystemBase {
 
     public double armEncoder2Deg;
     public double clawEncoder2Deg;
-    public int testNumber = 0;
+    public int armNumber = 0;
+    public int clawNumber = 0;
     public int pov;
     
     //Initializer
@@ -27,32 +27,21 @@ public class RobotArmSys extends SubsystemBase {
         resetEncoders();
     }
 
-    public void ArmUp() {
-        testNumber++;
-        arm_Motor.set(ControlMode.PercentOutput, 0.5);
+    public void setArm(double Speed) {
+        arm_Motor.set(ControlMode.PercentOutput, Speed);
     }
 
-    public void ArmDown() {
-        testNumber--;
-        arm_Motor.set(ControlMode.PercentOutput, -0.5);
-    }
-
-    public void ClawRight() {
-        testNumber = 3;
-        claw_Motor.set(ControlMode.PercentOutput, 0.5);
-    }
-
-    public void ClawLeft() {
-        testNumber = 4;
-        claw_Motor.set(ControlMode.PercentOutput, -0.5);
+    public void setClaw(double Speed) {
+        claw_Motor.set(ControlMode.PercentOutput, Speed);
     }
 
     public void stopArm() {
-        testNumber---;
+        armNumber = 0;
         arm_Motor.set(ControlMode.PercentOutput, 0);
     }
 
     public void stopClaw() {
+        clawNumber = 0;
         claw_Motor.set(ControlMode.PercentOutput, 0);
     }
 
@@ -65,7 +54,8 @@ public class RobotArmSys extends SubsystemBase {
         pov = joy.getPOV();
         
         SmartDashboard.putNumber("POV", pov);
-        SmartDashboard.putNumber("testNum", testNumber);
+        SmartDashboard.putNumber("armNum", armNumber);
+        SmartDashboard.putNumber("clawNum", clawNumber);
     }
 
 }

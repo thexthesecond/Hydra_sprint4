@@ -10,6 +10,7 @@ import frc.robot.RobotArmSys;
 
 public class RobotArmCmd extends Command {
   private final RobotArmSys m_RobotArmSys;
+  public int pov;
 
   public RobotArmCmd(RobotArmSys m_RobotArmSys) {
     this.m_RobotArmSys = m_RobotArmSys;
@@ -23,33 +24,41 @@ public class RobotArmCmd extends Command {
 
   @Override
   public void execute() {
+    pov = m_RobotArmSys.pov;
 
-    if (m_RobotArmSys.pov == 0) {
+    // Movimentação dos motores
+    if (pov == 0) {
       m_RobotArmSys.ArmUp();
     }
 
-    if (m_RobotArmSys.pov == 180) {
+    if (pov == 180) {
       m_RobotArmSys.ArmDown();
     }
 
-    if (m_RobotArmSys.pov == 90) {
+    if (pov == 90) {
       m_RobotArmSys.ClawLeft();
     }
 
-    if (m_RobotArmSys.pov == 270) {
+    if (pov == 270) {
       m_RobotArmSys.ClawRight();
     }
 
+    // Comando de parada com valor de teste
+    if (m_RobotArmSys.armNumber > 180 || m_RobotArmSys.armNumber < -180) {
+      m_RobotArmSys.stopArm();
+    }
+
+    if (m_RobotArmSys.clawNumber > 180 || m_RobotArmSys.clawNumber < -180) {
+      m_RobotArmSys.stopClaw();
+    }
+
+    // Comando de parada com valor do encoder
     if (m_RobotArmSys.armEncoder2Deg > 180 || m_RobotArmSys.armEncoder2Deg < -180) {
       m_RobotArmSys.stopArm();
     }
 
     if (m_RobotArmSys.clawEncoder2Deg > 180 || m_RobotArmSys.clawEncoder2Deg < -180) {
-      m_RobotArmSys.stopArm();
-    }
-
-    if (m_RobotArmSys.testNumber > 180) {
-      m_RobotArmSys.stopArm();
+      m_RobotArmSys.stopClaw();
     }
   }
 
