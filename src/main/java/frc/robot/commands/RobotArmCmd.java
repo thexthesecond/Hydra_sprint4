@@ -4,13 +4,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.RobotArmSys;
 
 public class RobotArmCmd extends Command {
   private final RobotArmSys m_RobotArmSys;
   public int pov;
+  public int armNumber;
+    public int clawNumber;
 
   public RobotArmCmd(RobotArmSys m_RobotArmSys) {
     this.m_RobotArmSys = m_RobotArmSys;
@@ -28,19 +30,23 @@ public class RobotArmCmd extends Command {
 
     // Movimentação dos motores
     if (pov == 0) {
-      m_RobotArmSys.ArmUp();
+      m_RobotArmSys.armNumber++;
+      m_RobotArmSys.setArm(Constants.kTestSpeed);
     }
 
     if (pov == 180) {
-      m_RobotArmSys.ArmDown();
-    }
-
-    if (pov == 90) {
-      m_RobotArmSys.ClawLeft();
+      m_RobotArmSys.armNumber--;
+      m_RobotArmSys.setArm(-Constants.kTestSpeed);
     }
 
     if (pov == 270) {
-      m_RobotArmSys.ClawRight();
+      m_RobotArmSys.clawNumber++;
+      m_RobotArmSys.setClaw(Constants.kTestSpeed);
+    }
+
+    if (pov == 90) {
+      m_RobotArmSys.clawNumber--;
+      m_RobotArmSys.setClaw(-Constants.kTestSpeed);
     }
 
     // Comando de parada com valor de teste
